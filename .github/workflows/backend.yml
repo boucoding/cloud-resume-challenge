@@ -1,0 +1,74 @@
+name: "2. Backend Tests & Lambda Deploy"
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend.yml'
+  workflow_dispatch:
+
+permissions:
+  id-token: write # Required for AWS OIDC authentication
+  contents: read
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION || 'eu-north-1' }}
+  ROLE_TO_ASSUME: ${{ vars.AWS_ROLE_TO_ASSUME || secrets.AWS_ROLE_TO_ASSUME }}
+  AWS_STS_REGIONAL_ENDPOINTS: regional
+  LAMBDA_FUNCTION_NAME: "cloud-resume-counter"
+
+jobs:
+  test_backend:
+    name: "Python Unit Tests (Pytest & Moto)"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements-dev.txt
+
+      - name: Run Pytest Suite
+        run: |
+          PYTHONPATH=. pytest -v backend/tests/
+
+  deploy_lambda:
+    name: "Package & Deploy Lambda"
+    needs: [test_backend]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Package Lambda Function
+        run: |
+          cd backend
+          zip -j lambda_function.zip lambda_function.py
+
+      - name: Update Lambda Function Code
+        run: |
+          aws lambda update-function-code \
+            --function-name ${{ env.LAMBDA_FUNCTION_NAME }} \
+            --zip-file fileb://backend/lambda_function.zip

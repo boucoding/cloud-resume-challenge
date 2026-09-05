@@ -1,0 +1,62 @@
+name: "3. Frontend Deploy & Invalidation"
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/frontend.yml'
+  workflow_dispatch:
+
+permissions:
+  id-token: write # Required for AWS OIDC authentication
+  contents: read
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION || 'eu-north-1' }}
+  ROLE_TO_ASSUME: ${{ vars.AWS_ROLE_TO_ASSUME || secrets.AWS_ROLE_TO_ASSUME }}
+  AWS_STS_REGIONAL_ENDPOINTS: regional
+
+jobs:
+  deploy_frontend:
+    name: "Sync S3 & Invalidate CloudFront"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Fetch Infrastructure Outputs from AWS
+        id: tf_outputs
+        run: |
+          S3_BUCKET=$(aws s3api list-buckets --query "Buckets[?starts_with(Name, 'cloud-resume-frontend-')].Name | [0]" --output text)
+          CF_DIST_ID=$(aws cloudfront list-distributions --query "DistributionList.Items[?Comment=='Cloud Resume Challenge Distribution'].Id | [0]" --output text)
+          API_ENDPOINT=$(aws apigatewayv2 get-apis --query "Items[?Name=='cloud-resume-http-api'].ApiEndpoint | [0]" --output text)
+          
+          echo "s3_bucket=$S3_BUCKET" >> $GITHUB_OUTPUT
+          echo "cf_dist_id=$CF_DIST_ID" >> $GITHUB_OUTPUT
+          echo "api_endpoint=$API_ENDPOINT" >> $GITHUB_OUTPUT
+
+      - name: Inject API Gateway URL into counter.js
+        run: |
+          API_URL="${{ steps.tf_outputs.outputs.api_endpoint }}/visitors"
+          echo "Injecting API URL: $API_URL"
+          sed -i "s|https://REPLACE_WITH_API_GATEWAY_URL/visitors|${API_URL}|g" frontend/js/counter.js
+
+      - name: Upload to S3 Bucket
+        run: |
+          aws s3 sync frontend/ s3://${{ steps.tf_outputs.outputs.s3_bucket }}/ \
+            --delete \
+            --cache-control "max-age=3600"
+
+      - name: Invalidate CloudFront Cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ steps.tf_outputs.outputs.cf_dist_id }} \
+            --paths "/*"
