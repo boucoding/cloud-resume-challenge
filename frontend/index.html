@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Resume of Abdelrahman Ahmed - AI & Agent Engineer" />
-  <title>Abdelrahman Ahmed | AI & Agent Engineer</title>
+  <meta name="description" content="Resume of Abdelrahman Ahmed - AI Engineer (Agents, RAG & Evaluation Systems)" />
+  <title>Abdelrahman Ahmed | AI Engineer — Agents, RAG & Evaluation Systems</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -21,7 +21,7 @@
           <span class="pulse-dot"></span> Available for AI & Cloud roles
         </div>
         <h1 class="name">Abdelrahman Ahmed</h1>
-        <h2 class="title">AI & Agent Engineer <span class="title-sub">— Agent Orchestration, Evals, RAG Systems</span></h2>
+        <h2 class="title">AI Engineer <span class="title-sub">— Agents, RAG & Evaluation Systems</span></h2>
         
         <div class="contacts">
           <a href="mailto:bouprogramming@gmail.com" class="contact-item">
@@ -64,8 +64,27 @@
     <section class="section summary-section">
       <div class="summary-card">
         <p>
-          Engineer building production LLM agents and quality systems that keep them trustworthy. Designed a live multi-tenant AI platform serving <strong>20,000+ monthly visitors</strong>: a tool-calling agent with task-based model routing, retry and rate-limit policy, metered AI credits, and a 60-case golden-dataset eval suite graded by LLM-as-judge on every commit. Cut LLM inference cost per message by <strong>99%</strong> with a custom architecture. Previously architected a real estate platform underlying <strong>2M+ SAR</strong> in revenue.
+          University student with ~2 years of part-time production engineering experience, specializing in backend systems for LLM agents, RAG, and evaluation. Built and operate a tool-calling agent platform at Realo with task-based model routing, retry/idempotency handling, metered AI credits, and a CI regression suite grading grounding and hallucination on every commit. Previously led technical delivery at Oqod.sa on a real estate platform supporting business operations generating <strong>SAR 2M+</strong> in revenue.
         </p>
+      </div>
+    </section>
+
+    <!-- Education -->
+    <section class="section">
+      <h3 class="section-title">
+        <span class="section-icon">🎓</span> Education
+      </h3>
+      <div class="education-card">
+        <div class="education-header">
+          <div>
+            <h4 class="role">B.S. Software Engineering</h4>
+            <span class="company">KFUPM</span>
+          </div>
+          <span class="period">Expected May 2028</span>
+        </div>
+        <div>
+          <span class="honors-badge">First Class Distinction</span>
+        </div>
       </div>
     </section>
 
@@ -80,18 +99,18 @@
         <article class="timeline-item">
           <div class="timeline-header">
             <div>
-              <h4 class="role">AI & Backend Engineer</h4>
+              <h4 class="role">AI & Backend Engineer <span class="employment-type">(Part-time)</span></h4>
               <span class="company">Realo</span>
             </div>
             <span class="period">12/2025 – 09/2026</span>
           </div>
           <ul class="bullet-points">
-            <li>Built and operate a live AI SaaS platform serving <strong>20,000+ monthly visitors</strong>, with multi-language and multi-currency support.</li>
-            <li>Designed a tool-calling agent over property data (<code class="code-inline">search_properties</code>, <code class="code-inline">get_property</code>, <code class="code-inline">search_knowledge</code>, <code class="code-inline">get_project_contact</code>, <code class="code-inline">get_project_location</code>, <code class="code-inline">show_interest_form</code>) with a task-based router selecting between open-weight GPT and Llama models per call, and a hybrid retrieval layer combining vector search with exact filtering.</li>
+            <li>Built and operate a live AI SaaS platform with <strong>20,000+ monthly site visitors</strong>, with multi-language and multi-currency support.</li>
+            <li>Designed a tool-calling property agent across search, knowledge retrieval, project data, and lead-capture tools, with task-based model routing between open-weight GPT and Llama models and hybrid vector + exact-filter retrieval.</li>
             <li>Hardened the orchestration layer for production: three-attempt retry policy with error handling, rate limiting, idempotency keys, race-condition handling, and prompt-injection defenses across concurrent agent runs.</li>
             <li>Built an AI credits system metering consumption per tool call and per RAG ingestion, including automatic refunds on failed calls, plus payment gateway and webhook integration for billing.</li>
-            <li>Stood up agent evals and QA: a <strong>60-case golden dataset</strong> plus 150+ test scenarios covering edge cases, graded by LLM-as-judge for grounding and hallucination as a regression suite on every commit; a secondary agent continuously checks quality standards to catch drift with strict tenant data isolation.</li>
-            <li>Reduced LLM inference cost per message by <strong>99% ($1.00 → $0.001)</strong> by replacing full-context prompting with a <code class="code-inline">pgvector</code> RAG pipeline over listings, company, and market data; integrated OpenAI, Gemini, and Claude APIs with custom embedding pipelines on Terraform-provisioned AWS and DigitalOcean.</li>
+            <li>Added CI regression evaluation using a <strong>60-case golden dataset</strong> and 150+ edge-case scenarios, evaluating grounding, hallucination, and expected tool behavior with LLM-as-judge — caught multiple regressions before they reached users, with guardrails keeping retrieval isolated per tenant.</li>
+            <li>Replaced full-context prompting over property data with a <code class="code-inline">pgvector</code> RAG pipeline, cutting median input tokens per request from <strong>~8,000 to ~384</strong>; integrated OpenAI, Gemini, and Claude APIs on Terraform-provisioned AWS and DigitalOcean.</li>
           </ul>
         </article>
 
@@ -99,14 +118,14 @@
         <article class="timeline-item">
           <div class="timeline-header">
             <div>
-              <h4 class="role">Technical Product Lead</h4>
+              <h4 class="role">Technical Product Lead <span class="employment-type">(Part-time)</span></h4>
               <span class="company">Oqod.sa</span>
             </div>
             <span class="period">12/2024 – 12/2025</span>
           </div>
           <ul class="bullet-points">
-            <li>Built with full ownership a real estate platform (web + 2 mobile apps) integrating <strong>Nafath</strong>, <strong>Ministry of Commerce</strong>, and <strong>Ministry of Justice</strong> for identity verification and data accuracy, underlying <strong>2M+ SAR</strong> in company revenue.</li>
-            <li>Led end-to-end technical delivery across a team of 5, managing 230 features from concept to launch through Scrum, reporting progress to stakeholders including the CEO; cut monthly infrastructure costs <strong>44%</strong> via custom EC2 provisioning.</li>
+            <li>Architected an AI-powered real estate platform (web + 2 mobile apps) supporting business operations generating <strong>SAR 2M+</strong> in revenue; integrated <strong>Nafath</strong>, <strong>Ministry of Commerce</strong>, and <strong>Ministry of Justice</strong> verification systems.</li>
+            <li>Led end-to-end technical delivery across a five-person team (Go, Node.js, Django/DRF); established CI/CD pipelines and cut monthly infrastructure costs <strong>44%</strong> through instance right-sizing, AWS cost optimization, and reducing latency via async API calls and algorithmic complexity fixes found through observability.</li>
           </ul>
         </article>
       </div>
@@ -146,40 +165,79 @@
         <div class="skill-group">
           <div class="skill-group-title">AI / LLM</div>
           <div class="skill-tags">
-            <span class="tag">RAG architecture</span>
+            <span class="tag">RAG</span>
             <span class="tag">pgvector</span>
             <span class="tag">Embeddings</span>
-            <span class="tag">Prompt & context engineering</span>
-            <span class="tag">OpenAI / Gemini / Claude APIs</span>
-            <span class="tag">Open-weight (GPT, Llama)</span>
-            <span class="tag">Claude Code / Cursor / Codex</span>
+            <span class="tag">Structured outputs</span>
+            <span class="tag">Context engineering</span>
+            <span class="tag">OpenAI</span>
+            <span class="tag">Gemini</span>
+            <span class="tag">Claude</span>
+            <span class="tag">Llama</span>
           </div>
         </div>
 
         <div class="skill-group">
-          <div class="skill-group-title">Cloud, DevOps & Infra</div>
+          <div class="skill-group-title">Languages</div>
           <div class="skill-tags">
-            <span class="tag">AWS (S3, CloudFront, Lambda, DynamoDB, API GW, IAM, Route53)</span>
-            <span class="tag">Terraform (IaC)</span>
-            <span class="tag">GitHub Actions CI/CD</span>
-            <span class="tag">OIDC Federation</span>
-            <span class="tag">Docker</span>
-          </div>
-        </div>
-
-        <div class="skill-group">
-          <div class="skill-group-title">Languages & Backend</div>
-          <div class="skill-tags">
-            <span class="tag">Python</span>
             <span class="tag">Go</span>
+            <span class="tag">Python</span>
             <span class="tag">JavaScript / TypeScript</span>
             <span class="tag">Java</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-group-title">Backend</div>
+          <div class="skill-tags">
             <span class="tag">Node.js</span>
             <span class="tag">Django (DRF)</span>
+            <span class="tag">REST APIs</span>
+            <span class="tag">Celery / Task queues</span>
             <span class="tag">PostgreSQL</span>
-            <span class="tag">Redis</span>
             <span class="tag">MongoDB</span>
-            <span class="tag">Celery</span>
+            <span class="tag">Redis</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-group-title">Cloud & Infra</div>
+          <div class="skill-tags">
+            <span class="tag">AWS (EC2, S3, CloudFront, Lambda, DynamoDB)</span>
+            <span class="tag">DigitalOcean</span>
+            <span class="tag">Terraform</span>
+            <span class="tag">Docker</span>
+            <span class="tag">CI/CD (GitHub Actions)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certifications -->
+    <section class="section">
+      <h3 class="section-title">
+        <span class="section-icon">📜</span> Certifications & Programs
+      </h3>
+      <div class="certifications-grid">
+        <div class="cert-card">
+          <div class="cert-badge">PMI</div>
+          <div>
+            <h4 class="cert-title">CAPM®</h4>
+            <span class="cert-issuer">Project Management Institute</span>
+          </div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-badge">AI</div>
+          <div>
+            <h4 class="cert-title">Artificial Intelligence, Advanced Stage</h4>
+            <span class="cert-issuer">KAUST Academy</span>
+          </div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-badge">LEAD</div>
+          <div>
+            <h4 class="cert-title">McKinsey Forward Program</h4>
+            <span class="cert-issuer">McKinsey & Company</span>
           </div>
         </div>
       </div>
